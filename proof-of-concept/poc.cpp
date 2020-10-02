@@ -19,9 +19,6 @@ int main()
     std::string schema{"otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"};
 
     std::cout << "Full schema: " << schema << std::endl;
-
-    std::string parameter{};
-
     std::cout << std::endl << "Label: " << findParameter(schema, "label") << std::endl
         << "Secret: " << findParameter(schema, "secret") << std::endl
         << "Account: " << findParameter(schema, "account") << std::endl
@@ -58,7 +55,6 @@ std::string findParameter(std::string schema, std::string parameter)
         end = schema.find("&") - start;
     }
 
-    // std::cout << std::endl << schema << start << std::endl << end << std::endl;
     std::string param = schema.substr(start, end);
 
     return param;
