@@ -16,7 +16,7 @@ int main()
     unsigned short digits{};
     unsigned period{30}; // interval in seconds, 3-30, 30 by default
 
-    std::string schema{"otpauth://totp/COMPANYNAME:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"};
+    std::string schema{"otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"};
 
     std::cout << "Full schema: " << schema << std::endl;
 
@@ -36,11 +36,10 @@ std::string findParameter(std::string schema, std::string parameter)
 
     if (parameter == "label")
     {
-        /*
-         ! FIX ME: end stops at any character like '_'
-         */
+        schema = schema.erase(0, schema.find("//"));
+
         start = schema.find("//") + 7;
-        end = schema.find(":");
+        end = schema.find(":") - start;
     }
     else if (parameter == "account")
     {
