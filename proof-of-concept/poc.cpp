@@ -1,7 +1,14 @@
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <cmath>
+#include <iomanip>
+#include <sstream>
+#include <vector>
 
 std::string findParameter(std::string schema, std::string parameter);
+
+std::string getSteps(unsigned short period);
 
 int main()
 {
@@ -36,6 +43,7 @@ int main()
         << "Algorithm: " << algorithm << std::endl
         << "Digits: "    << digits << std::endl
         << "Period: "    << period << std::endl;
+    std::string message{getSteps(period)};
 }
 
 std::string findParameter(std::string schema, std::string parameter)
@@ -69,4 +77,15 @@ std::string findParameter(std::string schema, std::string parameter)
     std::string param = schema.substr(start, end);
 
     return param;
+}
+
+std::string getSteps(unsigned short period)
+{
+    unsigned long int unix_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    unsigned long int steps = floor(unix_time / period);
+
+    std::stringstream stream;
+    stream << std::hex << steps;
+    std::string result(stream.str());
+    return result;
 }
