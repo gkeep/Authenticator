@@ -1,13 +1,14 @@
 #include <iostream>
 #include <string>
-#include <chrono>
-#include <cmath>
-#include <iomanip>
-#include <sstream>
-#include <vector>
+#include <chrono> // Used for UNIX epoch
+#include <cmath> // Used for `floor` function
+#include <iomanip> // Used for conevrsion to HEX
+#include <sstream> // Used for conevrsion to HEX
 
+// Returns value of a specified parameter from initial schema
 std::string findParameter(std::string schema, std::string parameter);
 
+// Returns HEX value of steps elapsed since UNIX epoch
 std::string getSteps(unsigned short period);
 
 int main()
@@ -16,13 +17,13 @@ int main()
      * SCHEMA: otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30
      */
 
-    std::string label{}; // ex. "ACME%20Co"
-    std::string secret{}; // ex. "NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR"
-    std::string account{}; // ex. "john[at]example.com"
-    std::string issuer{}; // ex. "ACME%20Co"
-    std::string algorithm{}; // ex. SHA1
-    unsigned short digits{};
-    unsigned short period{30}; // interval in seconds (3-30), 30 by default
+    std::string label{}; // Token label, service or company name
+    std::string secret{}; // Token secret, 32 HEX characters
+    std::string account{}; // Token's account, email or username
+    std::string issuer{}; // Token's issuer, company name
+    std::string algorithm{}; // Algorithm used in token generation, SHA1 SHA256 SHA512, default is SHA1
+    unsigned short digits{}; // Number of digits in token, 3-6
+    unsigned short period{30}; // Interval in seconds (3-30), default is 30
 
     std::string schema{"otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"};
 

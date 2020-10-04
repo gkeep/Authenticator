@@ -9,10 +9,10 @@
 
 ### Algorithm:
 
-1. Get `N`, number of time steps elapsed since UNIX time
-    `N = floor(Tu / period)`, `Tu` is UNIX Time, `period` is interval in seconds (3-30)
+1. Get `steps`, number of time steps elapsed since UNIX time
+    `steps = floor(Tu / period)`, `Tu` is UNIX Time, `period` is interval in seconds (3-30)
 
-2. Convert `N` into HEX, the hex value *must* have 16 characters (prepend with 0, if needed)
+2. Convert `steps` into HEX, the hex value *must* have 16 characters (prepend with 0's, if needed)
 
 3. Convert the HEX value into a 8 bytes array and assign the value to var `message`.
 
