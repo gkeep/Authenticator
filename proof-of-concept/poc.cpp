@@ -5,13 +5,17 @@
 #include <iomanip> // Used for conevrsion to HEX
 #include <sstream> // Used for conevrsion to HEX
 
-// Returns value of a specified parameter from initial schema
+#include <cryptopp/hmac.h> // HMAC algorithm
+#include <cryptopp/sha.h>
+#include <cryptopp/hex.h>
+#include <cryptopp/filters.h>
 std::string findParameter(std::string schema, std::string parameter);
 
 // Returns HEX value of steps elapsed since UNIX epoch
 std::string getSteps(unsigned short period);
 
 int main()
+std::string getHash(std::string &key);
 {
     /*
      * SCHEMA: otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30
@@ -89,4 +93,24 @@ std::string getSteps(unsigned short period)
     stream << std::hex << steps;
     std::string result(stream.str());
     return result;
+}
+
+std::string getHash(std::string &key)
+/*
+ * DOCS:
+ * https://www.cryptopp.com/docs/ref/class_h_m_a_c.html
+ * 
+ * Implementation example:
+ * https://github.com/transeos/trading_bot/blob/f109b2b7f9fb41ba432a8de082b2408c2eb6b693/lib/include/utils/EncodeDecode.h
+ */
+{
+    std::string mac, hmac_hash;
+    CryptoPP::SecByteBlock byteKey((const uint8_t*)key.data(), key.size());
+
+    CryptoPP::HMAC<CryptoPP::SHA1> hash(byteKey, byteKey.size());
+
+    CryptoPP::StringSource ss1(key, true, new CryptoPP::HashFilter(hash, new CryptoPP::StringSink(mac)));
+    CryptoPP::StringSource ss2(mac, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(hmac_hash)));
+
+    return hmac_hash;
 }
