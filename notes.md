@@ -18,9 +18,9 @@
 
 4. Convert the `secret` into a 20 bytes array and assign the value to var `key`.
 
-5. Put `message` and `key` through the `algorithm` (SHA-1) to get `hash`
+5. Put `message` and `key` through the `algorithm` (HMAC-SHA1) to get `hash`
 
-6. Get last 4 bits of `hash` and get its integer value - `offset`
+6. Get last 4 bits of `hash` (last character) and get its integer value - `offset`
 
 7. Starting from the offset, get the first 4 bytes from the `hash`
 
