@@ -6,6 +6,7 @@
 
 [IOTA tutorial 34: Time-Based One-Time Password (TOTP)](https://www.youtube.com/watch?v=VOYxF12K1vE)
 
+**Schema**: `otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30`
 
 ### Algorithm:
 

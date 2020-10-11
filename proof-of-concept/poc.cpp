@@ -25,18 +25,15 @@ std::string findParameter(std::string schema, std::string parameter);
  */
 std::string getSteps(unsigned short &period);
 
-int main()
 /*
  * Hash the message through HMAC-SHA1 algorithm
  *
  * @param key Token secret.
  */
 std::string getHash(std::string &key);
-{
-    /*
-     * SCHEMA: otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30
-     */
 
+int main(int argc, char *argv[])
+{
     std::string label{}; // Token label, service or company name
     std::string secret{}; // Token secret, 32 HEX characters
     std::string account{}; // Token's account, email or username
@@ -45,9 +42,7 @@ std::string getHash(std::string &key);
     unsigned short digits{}; // Number of digits in token, 3-6
     unsigned short period{30}; // Interval in seconds (3-30), default is 30
 
-    std::string schema{"otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"};
-
-    std::cout << "Full schema: " << schema << std::endl;
+    const std::string schema = argv[1]; // TOTP schema
 
     label = findParameter(schema, "label");
     secret = findParameter(schema, "secret");
