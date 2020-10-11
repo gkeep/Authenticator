@@ -9,12 +9,28 @@
 #include <cryptopp/sha.h>
 #include <cryptopp/hex.h>
 #include <cryptopp/filters.h>
+
+/*
+ * Returns value of a specified parameter from initial schema
+ *
+ * @param schema Full TOTP schema
+ * @param parameter Needed parameter
+ */
 std::string findParameter(std::string schema, std::string parameter);
 
-// Returns HEX value of steps elapsed since UNIX epoch
-std::string getSteps(unsigned short period);
+/*
+ * Returns HEX value of steps elapsed since UNIX epoch
+ *
+ * @param period Interval in seconds
+ */
+std::string getSteps(unsigned short &period);
 
 int main()
+/*
+ * Hash the message through HMAC-SHA1 algorithm
+ *
+ * @param key Token secret.
+ */
 std::string getHash(std::string &key);
 {
     /*
@@ -84,7 +100,7 @@ std::string findParameter(std::string schema, std::string parameter)
     return param;
 }
 
-std::string getSteps(unsigned short period)
+std::string getSteps(unsigned short &period)
 {
     unsigned long int unix_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     unsigned long int steps = floor(unix_time / period);
