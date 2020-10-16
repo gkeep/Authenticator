@@ -32,6 +32,12 @@ std::string getSteps(unsigned short &period);
  */
 std::string getHash(std::string &key);
 
+/*
+ * Get binary value from hash
+ *
+ * @param hash Token hash
+ */
+int getVal(std::string hash);
 int main(int argc, char *argv[])
 {
     std::string label{}; // Token label, service or company name
@@ -124,4 +130,45 @@ std::string getHash(std::string &key)
     CryptoPP::StringSource ss2(mac, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(hmac_hash)));
 
     return hmac_hash;
+}
+
+int getVal(std::string hash)
+{
+    int offset = std::stoi(std::string(1, hash.back()), 0, 16); // Offset, last character of `hash` converted from HEX to INT
+    std::cout << offset << std::endl;
+
+    std::string holder{};
+    // Starting from the offset, get the first 4 bytes from the `hash`
+    for (int i{offset}; i <= offset+8; i++)
+        holder.push_back(hash[i]);
+
+    int result{};
+    for (int i{}; i < 8; i+=2)
+    {
+        std::string temp{};
+        temp.push_back(holder[i]);
+        temp.push_back(holder[i+1]);
+
+        std::cout << "before: " << temp << std::endl;
+
+        int tempp{};
+        // Apply binary operations
+        if (i == 0)
+            tempp += std::stoi(temp, 0, 16) & 0x7F;
+        else
+            tempp += std::stoi(temp, 0, 16) & 0xFF;
+
+        std::cout << "after: " << tempp << std::endl;
+        
+        // // Convert INT to HEX
+        // std::stringstream stream;
+        // stream << std::hex << tempp;
+        // result = std::stoi(stream.str(), 0, 16);
+
+        // Append new nums
+        result *= 100;
+        result += tempp;
+    }
+
+    return result;
 }
