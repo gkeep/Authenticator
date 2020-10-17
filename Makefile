@@ -1,7 +1,7 @@
 BINS = bin/poc
-LIBS = -lcryptopp
+LIBS = -lcryptopp -lssl -lcrypto -std=c++11
 FLAGS = -o $(BINS)
-ARGS = "otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
+ARGS = "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
 
 default: do
 
