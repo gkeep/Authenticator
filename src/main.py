@@ -1,25 +1,47 @@
-import otp
 from tkinter import *
+
+import otp
 
 """
     TODO list:
-    * - [ ] Finish GUI
+    * - [ ] Make a GUI
     * - [ ] Add QR code recognition
-
 """
+
+SCHEMA = "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
 
 root = Tk()
 
-# root.configure(bg="#161821")
+class OTPCode():
+    def __init__(self):
+        self.root = root
+        self.label = Label(root, text = "")
+        self.label.grid(row=1, column=1)
+        self.update()
 
-def Click():
-    newLabel = Label(root, text = otp.getOTP())
-    newLabel.grid(row=5, column=0)
+    def update(self):
+        self.label.configure(text = otp.getOTP(SCHEMA))
+        self.root.after(20000, self.update)
 
-root.title("an awesome project")
-root.geometry("768x480")
+def main():
+    root.title("Python TOTP")
+    # root.geometry("768x480")
 
-newButton = Button(root, text="button", command=Click, fg="#c6c8d1", bg="#161821")
-newButton.grid(row=0, column=0)
+    accountLabel = Label(root, text = otp.parseSchema(SCHEMA, "account"))
+    accountLabel.grid(row=0, column=0)
 
-root.mainloop()
+    labelLabel = Label(root, text = otp.parseSchema(SCHEMA, "label"))
+    labelLabel.grid(row=0, column=1)
+
+    labelCode = Label(root, text = "Code:")
+    labelCode.grid(row=1, column=0)
+
+    OTPCode()
+
+    # buttonRefresh = Button(root, text = "Refresh tokens", command=OTPCode)
+    # buttonRefresh.grid(row = 1, column = 3)
+
+    root.mainloop()
+
+if __name__ == '__main__':
+    main()

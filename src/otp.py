@@ -1,8 +1,9 @@
-# https://github.com/pyauth/pyotp
-import pyotp
+import pyotp # https://github.com/pyauth/pyotp
 
-SCHEMA = "otpauth://totp/ACME%20Co:john@example.com?secret=NYO2G5NPHL556J2HSF4AWOGFOZA3SRDR&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
-
+"""
+    TODO list:
+    * - [ ] Put all values from schema into a SQL database
+"""
 
 def parseSchema(schema, parameter):
     param = ""
@@ -17,9 +18,11 @@ def parseSchema(schema, parameter):
         schema = schema[schema.find(parameter):]
         param = schema[schema.find(parameter) + len(parameter) + 1 : schema.find("&")]
 
+    # remove encoded spaces from URI
+    param = param.replace("%20", ' ')
     return param
 
 
-def getOTP():
-    totp = pyotp.TOTP(parseSchema(SCHEMA, "secret"))
+def getOTP(schema):
+    totp = pyotp.TOTP(parseSchema(schema, "secret"))
     return totp.now()
