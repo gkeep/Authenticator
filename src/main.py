@@ -21,9 +21,19 @@ class OTPCode():
 
         self.update()
 
+    # update the code every 30 seconds
     def update(self):
         self.label.configure(text = otp.getOTP(URI))
         self.root.after(30000, self.update)
+
+# update countdown label
+def button_countdown(i, label):
+    if i > 0:
+        i -= 1
+        label.configure(text = i)
+        root.after(1000, lambda: button_countdown(i, label))
+    else:
+        button_countdown(30, label)
 
 def main():
     root.title("Python TOTP")
@@ -41,6 +51,10 @@ def main():
     labelCode.grid(row=1, column=0)
 
     OTPCode()
+
+    labelCountdown = Label(root, text = "", font = ("Fira Code", 15))
+    labelCountdown.grid(row = 1, column = 1)
+    button_countdown(30, labelCountdown)
 
     # buttonRefresh = Button(root, text = "Refresh tokens", command=OTPCode)
     # buttonRefresh.grid(row = 1, column = 3)
