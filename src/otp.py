@@ -2,27 +2,27 @@ import pyotp # https://github.com/pyauth/pyotp
 
 """
     TODO list:
-    * - [ ] Put all values from schema into a SQL database
+    * - [ ] Put all values from uri into a SQL database
 """
 
-def parseSchema(schema, parameter):
+def parseSchema(uri, parameter):
     param = ""
 
     if parameter == "label":
-        schema = schema[schema.find("//"):]
-        param = schema[schema.find("//")+7 : schema.find(":")]
+        uri = uri[uri.find("//"):]
+        param = uri[uri.find("//")+7 : uri.find(":")]
     elif parameter == "account":
-        schema = schema[15:]
-        param = schema[schema.find(":") + 1 : schema.find("?")]
+        uri = uri[15:]
+        param = uri[uri.find(":") + 1 : uri.find("?")]
     else:
-        schema = schema[schema.find(parameter):]
-        param = schema[schema.find(parameter) + len(parameter) + 1 : schema.find("&")]
+        uri = uri[uri.find(parameter):]
+        param = uri[uri.find(parameter) + len(parameter) + 1 : uri.find("&")]
 
     # remove encoded spaces from URI
-    param = param.replace("%20", ' ')
+    param = param.replace('%20', ' ')
     return param
 
 
-def getOTP(schema):
-    totp = pyotp.TOTP(parseSchema(schema, "secret"))
+def getOTP(uri):
+    totp = pyotp.TOTP(parseSchema(uri, "secret"))
     return totp.now()
