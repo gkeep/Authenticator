@@ -226,7 +226,7 @@ int getVal(std::string hash)
             tempp += std::stoi(temp, 0, 16) & 0xFF;
 
         std::cout << "after: " << tempp << std::endl;
-        
+
         // // Convert INT to HEX
         // std::stringstream stream;
         // stream << std::hex << tempp;
