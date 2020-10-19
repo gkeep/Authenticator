@@ -5,14 +5,19 @@ import otp
 """
     TODO list:
     * - [ ] Make a GUI
+    *    - [ ] Get favicons from websites
+    *    - [ ] Optimize for multiple codes
     * - [ ] Add QR code recognition
+
+    FIXME list:
+    * - [x] Countdown clock and otp code aren't synchronised
 """
 
-SCHEMA = "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
 URI = "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
 
 root = Tk()
 
+# label that displays the OTP code
 class OTPCode():
     def __init__(self):
         self.root = root
@@ -44,15 +49,11 @@ class countdownClock():
 
 def main():
     root.title("Python TOTP")
-    # root.geometry("768x480")
 
-    accountLabel = Label(root, text = otp.parseSchema(SCHEMA, "account"))
     accountLabel = Label(root, text = (otp.parseSchema(URI, "account") + " " + otp.parseSchema(URI, "label")), padx = 20, pady = 5)
     accountLabel.grid(row = 0, column = 0)
 
-    labelLabel = Label(root, text = otp.parseSchema(SCHEMA, "label"))
     OTPCode()
-
     countdownClock()
 
     # buttonRefresh = Button(root, text = "Refresh tokens", command=OTPCode)
