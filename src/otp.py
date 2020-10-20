@@ -5,7 +5,7 @@ import pyotp # https://github.com/pyauth/pyotp
     * - [ ] Put all values from uri into a SQL database
 """
 
-def parseSchema(uri, parameter):
+def parseURI(uri, parameter):
     param = ""
 
     if parameter == "label":
@@ -24,5 +24,5 @@ def parseSchema(uri, parameter):
 
 
 def getOTP(uri):
-    totp = pyotp.TOTP(parseSchema(uri, "secret"))
+    totp = pyotp.TOTP(parseURI(uri, "secret"))
     return totp.now()
