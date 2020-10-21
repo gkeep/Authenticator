@@ -8,10 +8,12 @@ import otp
     *    - [ ] Get favicons from websites
     *    - [ ] Optimize for multiple codes
     * - [ ] Add QR code recognition
+    * - [ ] Group codes in groups of 2 or 3
 
     FIXME list:
     * - [x] Countdown clock and otp code aren't synchronised
     * - [ ] Place account info and code after each other in column
+    * - [ ] Codes don't refresh if remaining time is not 30 on launch
 """
 
 URIS = {
@@ -27,19 +29,23 @@ root = Tk()
 # label that displays the OTP code
 class OTPCode():
     def __init__(self):
+        j = 1
+        for i in range(0, len(URIS)):
+            self.root = root
+            labels.append(Label(root, text = "", font = ("Fira Code", 30), pady = 10))
+            self.label = labels[i]
+            self.label.grid(row = j, column = 0)
+            j += 2
+        self.update_codes()
+
+    # update codes
+    def update_codes(self):
         i = 0
         for uri in URIS:
-            self.root = root
-            labels.append(Label(root, text = "", font = ("Fira Code", 20), pady = 20))
-            self.label = labels[i]
-            self.label.grid(row = i, column = 1)
-
-            self.update_codes(uri, i)
+            code = otp.getOTP(uri)
+            labels[i].configure(text = code)
             i += 1
 
-    # update the code every 30 seconds
-    def update_codes(self, uri, i):
-        labels[i].configure(text = otp.getOTP(uri))
 
 class accountInfo():
     def __init__(self):
@@ -54,18 +60,18 @@ class accountInfo():
 
             i += 1
 
-# countdown clock
-class countdownClock():
-    def __init__(self):
+class CountdownClock():
+    def __init__(self, codes):
         self.root = root
-        self.label = Label(root, text = "", font = ("Fira Code", 15))
-        self.label.grid(row = 1, column = 3)
+        self.label = Label(root, text = "", font = ("Fira Code", 20))
+        self.label.grid(row = len(URIS), column = 3, padx = 30)
 
-        self.update()
+        remaining_time = otp.getRemainingTime(otp.parseURI(URIS[1], "secret"))
+        self.update_clock(codes, remaining_time)
 
-    def update(self, i = 30):
+    def update_clock(self, codes, i):
         if i > 0:
-        # preferred color palette: https://primer.style/css/support/color-system
+            # preferred color palette: https://primer.style/css/support/color-system
             if i <= 10:
                 self.label.configure(fg = "#d73a49")
             elif i <= 20:
@@ -75,20 +81,17 @@ class countdownClock():
 
             self.label.configure(text = i)
             i -= 1
-            self.root.after(1000, lambda: self.update(i))
+            self.root.after(1000, lambda: self.update_clock(codes, i))
         else:
-            i = 0
-            for uri in URIS:
-                OTPCode().update_codes(uri, i)
-                self.update()
-                i += 1
+            codes.update_codes()
+            self.root.after(10, lambda: self.update_clock(codes, 30))
 
 def main():
     root.title("Python Authenticator")
 
-    accountInfo()
-    OTPCode()
-    countdownClock()
+    AccountInfo()
+    codes = OTPCode()
+    CountdownClock(codes)
 
     root.mainloop()
 

@@ -1,4 +1,6 @@
 import pyotp # https://github.com/pyauth/pyotp
+import datetime
+import math
 
 """
     TODO list:
@@ -16,7 +18,10 @@ def parseURI(uri, parameter):
         param = uri[uri.find(":") + 1 : uri.find("?")]
     else:
         uri = uri[uri.find(parameter):]
-        param = uri[uri.find(parameter) + len(parameter) + 1 : uri.find("&")]
+        if parameter == "period":
+            param = uri[uri.find(parameter) + len(parameter) + 1 :]
+        else:
+            param = uri[uri.find(parameter) + len(parameter) + 1 : uri.find("&")]
 
     # remove encoded spaces from URI
     param = param.replace('%20', ' ')
@@ -26,3 +31,9 @@ def parseURI(uri, parameter):
 def getOTP(uri):
     totp = pyotp.TOTP(parseURI(uri, "secret"))
     return totp.now()
+
+
+def getRemainingTime(key, period = 30):
+    totp = pyotp.TOTP(key, interval = float(period))
+    time_remaining = math.floor(totp.interval - datetime.datetime.now().timestamp() % totp.interval)
+    return time_remaining
