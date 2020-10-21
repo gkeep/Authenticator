@@ -16,10 +16,11 @@ import otp
     * - [ ] Codes don't refresh if remaining time is not 30 on launch
 """
 
-URIS = {
-    "otpauth://totp/ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30",
-    "otpauth://totp/ACME%20Co:kate@example.com?secret=2ALACOQ5CEW3LWZ5VPELVQNGGQZ5MEWL&issuer=Amazon&algorithm=SHA1&digits=6&period=30",
-    "otpauth://totp/ACME%20Co:mike@example.com?secret=KXNEYIS3I5EFCKVSCXIGEV3HUYTYFIWB&issuer=Google&algorithm=SHA1&digits=6&period=30"}
+URIS = [
+    "otpauth://totp/ACME%20Co:john@acme.co?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30",
+    "otpauth://totp/ACME%20Co:kate@amazon.co.uk?secret=2ALACOQ5CEW3LWZ5VPELVQNGGQZ5MEWL&issuer=Amazon&algorithm=SHA1&digits=6&period=30",
+    "otpauth://totp/ACME%20Co:mike@google.com?secret=KXNEYIS3I5EFCKVSCXIGEV3HUYTYFIWB&issuer=Google&algorithm=SHA1&digits=6&period=30"
+]
 
 labels = []
 info = []
@@ -87,7 +88,8 @@ class CountdownClock():
             self.root.after(10, lambda: self.update_clock(codes, 30))
 
 def main():
-    root.title("Python Authenticator")
+    root.title("Authenticator")
+    root.geometry("300x400")
 
     AccountInfo()
     codes = OTPCode()
