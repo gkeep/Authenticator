@@ -6,7 +6,7 @@ import otp
     TODO list:
     * - [ ] Make a GUI
     *    - [ ] Get favicons from websites
-    *    - [ ] Optimize for multiple codes
+    *    - [x] Optimize for multiple codes
     * - [ ] Add QR code recognition
     * - [ ] Group codes in groups of 2 or 3
 
