@@ -8,6 +8,9 @@ import math
 """
 
 def parseURI(uri, parameter):
+    """
+    Parse the URI for a parameter
+    """
     param = ""
 
     if parameter == "label":
@@ -29,11 +32,17 @@ def parseURI(uri, parameter):
 
 
 def getOTP(uri):
+    """
+    Return OTP from the passed URI
+    """
     totp = pyotp.TOTP(parseURI(uri, "secret"))
     return totp.now()
 
 
 def getRemainingTime(key, period = 30):
+    """
+    Return remaining time of an OTP code
+    """
     totp = pyotp.TOTP(key, interval = float(period))
     time_remaining = math.floor(totp.interval - datetime.datetime.now().timestamp() % totp.interval)
     return time_remaining

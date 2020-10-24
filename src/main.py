@@ -27,8 +27,10 @@ info = []
 
 root = Tk()
 
-# label that displays the OTP code
 class OTPCode():
+    """
+    Labels, that display the OTP code for an account
+    """
     def __init__(self):
         j = 1
         for i in range(0, len(URIS)):
@@ -48,6 +50,9 @@ class OTPCode():
             i += 1
 
 class AccountInfo():
+    """
+    Information about an account above the OTP code
+    """
     def __init__(self):
         i = 0
         j = 0
@@ -62,15 +67,19 @@ class AccountInfo():
             j += 2
 
 class CountdownClock():
-    def __init__(self, codes):
+    """
+    Countdown clock, shows remaining time of an OTP code
+    """
+    def __init__(self, OTPs):
         self.root = root
         self.label = Label(root, text = "", font = ("Fira Code", 20))
         self.label.grid(row = len(URIS), column = 3, padx = 30)
 
         remaining_time = otp.getRemainingTime(otp.parseURI(URIS[1], "secret"))
-        self.update_clock(codes, remaining_time)
+        self.update_clock(OTPs, remaining_time)
 
-    def update_clock(self, codes, i):
+    # update all OTP codes
+    def update_clock(self, OTPs, i):
         if i > 0:
             # preferred color palette: https://primer.style/css/support/color-system
             if i <= 10:
@@ -82,17 +91,17 @@ class CountdownClock():
 
             self.label.configure(text = i)
             i -= 1
-            self.root.after(1000, lambda: self.update_clock(codes, i))
+            self.root.after(1000, lambda: self.update_clock(OTPs, i))
         else:
-            codes.update_codes()
-            self.root.after(10, lambda: self.update_clock(codes, 30))
+            OTPs.update_codes()
+            self.root.after(10, lambda: self.update_clock(OTPs, 30))
 
 def main():
     root.title("Authenticator")
     root.geometry("300x400")
 
-    AccountInfo()
     codes = OTPCode()
+    AccountInfo()
     CountdownClock(codes)
 
     root.mainloop()
