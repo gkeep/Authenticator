@@ -28,9 +28,7 @@ info = []
 root = Tk()
 
 class OTPCode():
-    """
-    Labels, that display the OTP code for an account
-    """
+    """Labels, that display the OTP code for an account"""
     def __init__(self):
         j = 1
         for i in range(0, len(URIS)):
@@ -50,9 +48,7 @@ class OTPCode():
             i += 1
 
 class AccountInfo():
-    """
-    Information about an account above the OTP code
-    """
+    """Information about an account above the OTP code"""
     def __init__(self):
         i = 0
         j = 0
@@ -67,9 +63,7 @@ class AccountInfo():
             j += 2
 
 class CountdownClock():
-    """
-    Countdown clock, shows remaining time of an OTP code
-    """
+    """Countdown clock, shows remaining time of an OTP code"""
     def __init__(self, OTPs):
         self.root = root
         self.label = Label(root, text = "", font = ("Fira Code", 20))
