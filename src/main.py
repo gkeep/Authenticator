@@ -13,7 +13,7 @@ import otp
     FIXME list:
     * - [x] Countdown clock and otp code aren't synchronised
     * - [x] Place account info and code after each other in column
-    * - [ ] Codes don't refresh if remaining time is not 30 on launch
+    * - [x] Codes don't refresh if remaining time is not 30 on launch
 """
 
 URIS = [
@@ -81,14 +81,14 @@ class CountdownClock():
             elif i <= 20:
                 self.label.configure(fg = "#b08800")
             else:
-                self.label.configure(fg = "black")
+                self.label.configure(fg = "#28a745")
 
-            self.label.configure(text = i)
+            self.label.configure(text = round(i))
             i -= 1
             self.root.after(1000, lambda: self.update_clock(OTPs, i))
         else:
             OTPs.update_codes()
-            self.root.after(10, lambda: self.update_clock(OTPs, 30))
+            self.update_clock(OTPs, 30)
 
 def main():
     root.title("Authenticator")
