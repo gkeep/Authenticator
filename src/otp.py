@@ -7,7 +7,7 @@ import math
     * - [ ] Put all values from uri into a JSON file
 """
 
-def parseURI(uri, parameter):
+def parse_uri(uri, parameter):
     """Parse the URI for a parameter"""
     param = ""
 
@@ -29,13 +29,14 @@ def parseURI(uri, parameter):
     return param
 
 
-def getOTP(uri):
-    totp = pyotp.TOTP(parseURI(uri, "secret"))
+def get_otp(uri):
     """Return OTP from the passed URI"""
+    totp = pyotp.TOTP(parse_uri(uri, "secret"))
     return totp.now()
 
 
-def getRemainingTime(key, period = 30):
-    totp = pyotp.TOTP(key, interval = float(period))
-    time_remaining = math.floor(totp.interval - datetime.datetime.now().timestamp() % totp.interval)
-    return time_remaining    """Return remaining time of an OTP code"""
+def get_remaining_time(uri, period = 30):
+    """Return remaining time of an OTP code"""
+    totp = pyotp.TOTP(parse_uri(uri, "secret"), interval = float(period))
+    time_remaining = (totp.interval - time.time()) % totp.interval
+    return time_remaining

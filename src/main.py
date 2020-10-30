@@ -43,7 +43,7 @@ class OTPCode():
     def update_codes(self):
         i = 0
         for uri in URIS:
-            code = otp.getOTP(uri)
+            code = otp.get_otp(uri)
             labels[i].configure(text = code)
             i += 1
 
@@ -54,8 +54,8 @@ class AccountInfo():
         j = 0
         for uri in URIS:
             self.root = root
-            account = otp.parseURI(uri, "account")
-            issuer = otp.parseURI(uri, "issuer")
+            account = otp.parse_uri(uri, "account")
+            issuer = otp.parse_uri(uri, "issuer")
             info.append(Label(root, text = (account + " at " + issuer)))
             self.label = info[i]
             self.label.grid(row = j, column = 0, padx = 20)
@@ -69,7 +69,7 @@ class CountdownClock():
         self.label = Label(root, text = "", font = ("Fira Code", 20))
         self.label.grid(row = len(URIS), column = 3, padx = 30)
 
-        remaining_time = otp.getRemainingTime(otp.parseURI(URIS[1], "secret"))
+        remaining_time = otp.get_remaining_time(URIS[1])
         self.update_clock(OTPs, remaining_time)
 
     # update all OTP codes
