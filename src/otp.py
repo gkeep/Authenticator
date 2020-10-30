@@ -1,6 +1,7 @@
-import pyotp # https://github.com/pyauth/pyotp
-import datetime
+import time
 import math
+
+import pyotp  # https://github.com/pyauth/pyotp
 
 """
     TODO list:
