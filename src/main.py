@@ -1,13 +1,15 @@
-from tkinter import *
+import tkinter as tk
 
-import otp
+import otp, add
 
 """
     TODO list:
     * - [ ] Make a GUI
     *    - [ ] Get favicons from websites
     *    - [x] Optimize for multiple codes
-    * - [ ] Add QR code recognition
+    *    - [ ] Add 'Add' and 'Remove' menus
+    *       - [ ] Add by inputing the values
+    *       - [ ] Add QR code recognition
     * - [ ] Group codes in groups of 2 or 3
 
     FIXME list:
@@ -25,7 +27,7 @@ URIS = [
 labels = []
 info = []
 
-root = Tk()
+root = tk.Tk()
 
 class OTPCode():
     """Labels, that display the OTP code for an account"""
@@ -33,7 +35,8 @@ class OTPCode():
         j = 1
         for i in range(0, len(URIS)):
             self.root = root
-            labels.append(Label(root, text = "", font = ("Fira Code", 30), pady = 10))
+            labels.append(
+                tk.Label(root, text = "", font = ("monospaced", 30), pady = 10))
             self.label = labels[i]
             self.label.grid(row = j, column = 0)
             j += 2
@@ -56,7 +59,8 @@ class AccountInfo():
             self.root = root
             account = otp.parse_uri(uri, "account")
             issuer = otp.parse_uri(uri, "issuer")
-            info.append(Label(root, text = (account + " at " + issuer)))
+            info.append(
+                tk.Label(root, text = (account + " at " + issuer)))
             self.label = info[i]
             self.label.grid(row = j, column = 0, padx = 20)
             i += 1
@@ -66,8 +70,8 @@ class CountdownClock():
     """Countdown clock, shows remaining time of an OTP code"""
     def __init__(self, OTPs):
         self.root = root
-        self.label = Label(root, text = "", font = ("Fira Code", 20))
-        self.label.grid(row = len(URIS), column = 3, padx = 30)
+        self.label = tk.Label(root, text = "", font = ("monospace", 20))
+        self.label.grid(row = 1, column = 3, padx = 30)
 
         remaining_time = otp.get_remaining_time(URIS[1])
         self.update_clock(OTPs, remaining_time)
@@ -90,13 +94,24 @@ class CountdownClock():
             OTPs.update_codes()
             self.update_clock(OTPs, 30)
 
+class AddButton():
+    def __init__(self):
+        self.root = root
+        self.Button = tk.Button(self.root, text = "Add", font = ("monospace", 15), command = self.newWindow)
+        self.Button.grid(row = 2, column = 3)
+
+    def newWindow(self):
+        new_window = tk.Toplevel(root)
+        add.MainWindow(new_window)
+
 def main():
     root.title("Authenticator")
-    root.geometry("300x400")
+    # root.geometry("300x400")
 
     codes = OTPCode()
     AccountInfo()
     CountdownClock(codes)
+    AddButton()
 
     root.mainloop()
 
