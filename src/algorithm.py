@@ -25,8 +25,7 @@ def parse_uri(uri, parameter):
         else:
             param = uri[uri.find(parameter) + len(parameter) + 1 : uri.find("&")]
 
-    # remove encoded spaces from URI
-    param = param.replace('%20', ' ')
+    param = param.replace('%20', ' ') # remove encoded spaces from URI
     return param
 
 
