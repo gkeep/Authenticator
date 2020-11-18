@@ -1,5 +1,6 @@
 import tkinter as tk
 import algorithm, fonts
+import json
 
 normal_font = fonts.get_regular_font()
 
@@ -14,7 +15,7 @@ class Text():
 
         text[0].configure(text = "Issuer")
         text[1].configure(text = "Account name")
-        text[2].configure(text = "Secret")
+        text[2].configure(text = "Secret Key")
 
 class InputBox():
     def __init__(self, root, input_boxes):
@@ -28,11 +29,24 @@ class InputBox():
         input_boxes[2].configure(width = 30)
 
 class Finish():
-    def __init__(self, root):
+    def __init__(self, root, inputs):
         self.root = root
-        self.Button = tk.Button(root, text = "Save", font = (normal_font, 15), command = self.quit)
-        # self.Button.grid(row = 10, column = 1, rowspan = 3)
+        self.Button = tk.Button(root, text = "Save", font = (normal_font, 15), command = lambda: self.finish(inputs))
         self.Button.place(relx = 0.5, y = 150, anchor = "n")
 
-    def quit(self):
-        self.root.destroy()
+    def finish(self, inputs):
+        entry = {
+            "issuer": inputs[0].get(),
+            "account_name": inputs[1].get(),
+            "secret": inputs[2].get()
+        }
+
+        with open("data.json", "r") as database:
+            current_db = json.load(database) # read all current entries
+
+        current_db.append(entry) # append the new entry
+
+        with open("data.json", "w") as database:
+            database.write(json.dumps(current_db, indent = 4)) # write the new database
+
+        self.root.destroy() # close the window

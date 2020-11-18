@@ -6,7 +6,6 @@ import algorithm, fonts
 """
     TODO list:
     * - [ ] Make a GUI
-    *    - [ ] Get favicons from websites
     *    - [x] Optimize for multiple codes
     *    - [ ] Add 'Add' and 'Remove' menus
     *       - [ ] Add by inputing the values
@@ -19,11 +18,7 @@ import algorithm, fonts
     * - [x] Codes don't refresh if remaining time is not 30 on launch
 """
 
-URIS = [
-    "otpauth://totp/ACME%20Co:john@acme.co?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30",
-    "otpauth://totp/ACME%20Co:kate@amazon.co.uk?secret=2ALACOQ5CEW3LWZ5VPELVQNGGQZ5MEWL&issuer=Amazon&algorithm=SHA1&digits=6&period=30",
-    "otpauth://totp/ACME%20Co:mike@google.com?secret=KXNEYIS3I5EFCKVSCXIGEV3HUYTYFIWB&issuer=Google&algorithm=SHA1&digits=6&period=30"
-]
+database = algorithm.parse_json()
 
 labels = []
 info = []
@@ -37,7 +32,7 @@ class OTPCode():
     """Labels, that display the OTP code for an account"""
     def __init__(self):
         j = 1
-        for i in range(0, len(URIS)):
+        for i in range(0, len(database)):
             self.root = root
             labels.append(
                 tk.Label(root, text = "", font = (monospaced_font, 30), pady = 5))
@@ -49,8 +44,9 @@ class OTPCode():
     # update codes
     def update_codes(self):
         i = 0
-        for uri in URIS:
-            code = algorithm.get_otp(uri)
+        for account in database:
+            secret = account["secret"]
+            code = algorithm.get_otp(secret)
             code = code[ : int(len(code) / 2)] + " " + code[int(len(code) / 2) : len(code)] # group codes by 3
             labels[i].configure(text = code)
             i += 1
@@ -60,12 +56,12 @@ class AccountInfo():
     def __init__(self):
         i = 0
         j = 0
-        for uri in URIS:
+        for account in database:
             self.root = root
-            account = algorithm.parse_uri(uri, "account")
-            issuer = algorithm.parse_uri(uri, "issuer")
+            account_name = account["account_name"]
+            issuer = account["issuer"]
             info.append(
-                tk.Label(root, text = (account + " at " + issuer), font = (normal_font, 12)))
+                tk.Label(root, text = (account_name + " at " + issuer), font = (normal_font, 12)))
             self.label = info[i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
@@ -78,7 +74,7 @@ class CountdownClock():
         self.label = tk.Label(root, text = "", font = (monospaced_font, 20))
         self.label.grid(row = 1, column = 3, padx = 20)
 
-        remaining_time = algorithm.get_remaining_time(URIS[1])
+        remaining_time = algorithm.get_remaining_time(database[1]["secret"])
         self.update_clock(OTPs, remaining_time)
 
     # update all OTP codes
@@ -119,7 +115,7 @@ class AddButton():
         frame.place(x = 10, y = 0)
         addition_window.Text(frame, text)
         addition_window.InputBox(frame, input_boxes)
-        addition_window.Finish(dialog_window)
+        addition_window.Finish(dialog_window, input_boxes)
 
         dialog_window.lift() # ensure the window appears above all others
 

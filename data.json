@@ -1,0 +1,17 @@
+[
+    {
+        "issuer": "ACME Co",
+        "account_name": "john@acme.co",
+        "secret": "HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"
+    },
+    {
+        "issuer": "Amazon",
+        "account_name": "kate@amazon.co.uk",
+        "secret": "2ALACOQ5CEW3LWZ5VPELVQNGGQZ5MEWL"
+    },
+    {
+        "issuer": "Google",
+        "account_name": "mike@google.com",
+        "secret": "KXNEYIS3I5EFCKVSCXIGEV3HUYTYFIWB"
+    }
+]

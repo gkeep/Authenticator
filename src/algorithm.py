@@ -1,15 +1,25 @@
 import time
 import math
+import json
 
 import pyotp  # https://github.com/pyauth/pyotp
 
 """
     TODO list:
-    * - [ ] Put all values from uri into a JSON file
+    * - [x] Put all values from uri into a JSON file
 """
 
+def parse_json():
+    with open("data.json", "r") as data:
+        database = json.load(data)
+
+    return database
+
 def parse_uri(uri, parameter):
-    """Parse the URI for a parameter"""
+    """Parse the URI for a parameter
+
+    Deprecated?
+    """
     param = ""
 
     if parameter == "label":
@@ -29,14 +39,19 @@ def parse_uri(uri, parameter):
     return param
 
 
-def get_otp(uri):
+def get_otp(secret):
     """Return OTP from the passed URI"""
-    totp = pyotp.TOTP(parse_uri(uri, "secret"))
+    totp = pyotp.TOTP(secret)
     return totp.now()
 
 
-def get_remaining_time(uri, period = 30):
+def get_remaining_time(secret, period = 30):
     """Return remaining time of an OTP code"""
-    totp = pyotp.TOTP(parse_uri(uri, "secret"), interval = float(period))
+    totp = pyotp.TOTP(secret, interval = float(period))
     time_remaining = (totp.interval - time.time()) % totp.interval
     return time_remaining
+
+if __name__ == "__main__":
+    db = parse_json()
+    for account in db:
+        print(account["secret"])
