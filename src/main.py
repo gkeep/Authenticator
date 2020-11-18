@@ -98,21 +98,36 @@ class CountdownClock():
 class AddButton():
     def __init__(self):
         self.root = root
-        self.Button = tk.Button(self.root, text = "Add", font = ("monospace", 15), command = self.newWindow)
+        self.Button = tk.Button(self.root, text = "Add", font = (normal_font, 15), command = self.create_dialog)
         self.Button.grid(row = 2, column = 3)
 
-    def newWindow(self):
-        new_window = tk.Toplevel(root)
-        add.MainWindow(new_window)
+    def create_dialog(self):
+        text = []
+        input_boxes = []
 
-def main():
-    root.title("Authenticator")
-    # root.geometry("300x400")
+        global dialog_window
+        dialog_window = tk.Toplevel(root)
 
+        dialog_window.title("Authenticator - new code")
+        dialog_window.geometry("550x200")
+        dialog_window.resizable(width = False, height = False)
+        frame = tk.Frame(dialog_window, padx = 5, pady = 5)
+        frame.place(x = 10, y = 0)
+        addition_window.Text(frame, text)
+        addition_window.InputBox(frame, input_boxes)
+        addition_window.Finish(dialog_window)
+
+        dialog_window.lift() # ensure the window appears above all others
+
+def update_all():
     codes = OTPCode()
     AccountInfo()
     CountdownClock(codes)
     AddButton()
+
+def main():
+    root.title("Authenticator")
+    update_all()
 
     root.mainloop()
 
