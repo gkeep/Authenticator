@@ -41,12 +41,6 @@ class Finish():
             "secret": inputs[2].get()
         }
 
-        with open("data.json", "r") as database:
-            current_db = json.load(database) # read all current entries
-
-        current_db.append(entry) # append the new entry
-
-        with open("data.json", "w") as database:
-            database.write(json.dumps(current_db, indent = 4)) # write the new database
+        algorithm.append_entry(entry)
 
         self.root.destroy() # close the window
