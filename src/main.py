@@ -1,6 +1,7 @@
 import tkinter as tk
 
-import otp, add
+import addition_window
+import algorithm, fonts
 
 """
     TODO list:
@@ -29,6 +30,9 @@ info = []
 
 root = tk.Tk()
 
+monospaced_font = fonts.get_monospaced_font()
+normal_font = fonts.get_regular_font()
+
 class OTPCode():
     """Labels, that display the OTP code for an account"""
     def __init__(self):
@@ -36,7 +40,7 @@ class OTPCode():
         for i in range(0, len(URIS)):
             self.root = root
             labels.append(
-                tk.Label(root, text = "", font = ("monospaced", 30), pady = 10))
+                tk.Label(root, text = "", font = (monospaced_font, 30), pady = 5))
             self.label = labels[i]
             self.label.grid(row = j, column = 0)
             j += 2
@@ -58,12 +62,12 @@ class AccountInfo():
         j = 0
         for uri in URIS:
             self.root = root
-            account = otp.parse_uri(uri, "account")
-            issuer = otp.parse_uri(uri, "issuer")
+            account = algorithm.parse_uri(uri, "account")
+            issuer = algorithm.parse_uri(uri, "issuer")
             info.append(
-                tk.Label(root, text = (account + " at " + issuer)))
+                tk.Label(root, text = (account + " at " + issuer), font = (normal_font, 12)))
             self.label = info[i]
-            self.label.grid(row = j, column = 0, padx = 20)
+            self.label.grid(row = j, column = 0, padx = 10)
             i += 1
             j += 2
 
@@ -71,10 +75,10 @@ class CountdownClock():
     """Countdown clock, shows remaining time of an OTP code"""
     def __init__(self, OTPs):
         self.root = root
-        self.label = tk.Label(root, text = "", font = ("monospace", 20))
-        self.label.grid(row = 1, column = 3, padx = 30)
+        self.label = tk.Label(root, text = "", font = (monospaced_font, 20))
+        self.label.grid(row = 1, column = 3, padx = 20)
 
-        remaining_time = otp.get_remaining_time(URIS[1])
+        remaining_time = algorithm.get_remaining_time(URIS[1])
         self.update_clock(OTPs, remaining_time)
 
     # update all OTP codes
