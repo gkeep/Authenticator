@@ -10,7 +10,7 @@ import otp, add
     *    - [ ] Add 'Add' and 'Remove' menus
     *       - [ ] Add by inputing the values
     *       - [ ] Add QR code recognition
-    * - [ ] Group codes in groups of 2 or 3
+    * - [x] Group codes in groups of 2 or 3
 
     FIXME list:
     * - [x] Countdown clock and otp code aren't synchronised
@@ -46,7 +46,8 @@ class OTPCode():
     def update_codes(self):
         i = 0
         for uri in URIS:
-            code = otp.get_otp(uri)
+            code = algorithm.get_otp(uri)
+            code = code[ : int(len(code) / 2)] + " " + code[int(len(code) / 2) : len(code)] # group codes by 3
             labels[i].configure(text = code)
             i += 1
 
