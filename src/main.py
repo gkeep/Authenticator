@@ -1,7 +1,8 @@
 import tkinter as tk
 
 import addition_window
-import algorithm, fonts
+import algorithm
+import fonts
 
 """
     TODO list:
@@ -18,33 +19,34 @@ import algorithm, fonts
     * - [x] Codes don't refresh if remaining time is not 30 on launch
 """
 
-database = algorithm.parse_json()
+DATABASE = algorithm.parse_json()
 
 labels = []
 info = []
 
 root = tk.Tk()
 
-monospaced_font = fonts.get_monospaced_font()
-normal_font = fonts.get_regular_font()
+MONOSPACED_FONT = fonts.get_monospaced_font()
+NORMAL_FONT = fonts.get_regular_font()
 
 class OTPCode():
     """Labels, that display the OTP code for an account"""
     def __init__(self):
         j = 1
-        for i in range(0, len(database)):
+        for i in range(0, len(DATABASE)):
             self.root = root
             labels.append(
-                tk.Label(root, text = "", font = (monospaced_font, 30), pady = 5))
+                tk.Label(root, text = "", font = (MONOSPACED_FONT, 30), pady = 5))
             self.label = labels[i]
             self.label.grid(row = j, column = 0)
             j += 2
         self.update_codes()
 
     # update codes
-    def update_codes(self):
+    @staticmethod
+    def update_codes():
         i = 0
-        for account in database:
+        for account in DATABASE:
             secret = account["secret"]
             code = algorithm.get_otp(secret)
             code = code[ : int(len(code) / 2)] + " " + code[int(len(code) / 2) : len(code)] # group codes by 3
@@ -56,12 +58,12 @@ class AccountInfo():
     def __init__(self):
         i = 0
         j = 0
-        for account in database:
+        for account in DATABASE:
             self.root = root
             account_name = account["account_name"]
             issuer = account["issuer"]
             info.append(
-                tk.Label(root, text = (account_name + " at " + issuer), font = (normal_font, 12)))
+                tk.Label(root, text = (account_name + " at " + issuer), font = (NORMAL_FONT, 12)))
             self.label = info[i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
@@ -69,16 +71,16 @@ class AccountInfo():
 
 class CountdownClock():
     """Countdown clock, shows remaining time of an OTP code"""
-    def __init__(self, OTPs):
+    def __init__(self, otps):
         self.root = root
-        self.label = tk.Label(root, text = "", font = (monospaced_font, 20))
+        self.label = tk.Label(root, text = "", font = (MONOSPACED_FONT, 20))
         self.label.grid(row = 1, column = 3, padx = 20)
 
-        remaining_time = algorithm.get_remaining_time(database[1]["secret"])
-        self.update_clock(OTPs, remaining_time)
+        remaining_time = algorithm.get_remaining_time(DATABASE[1]["secret"])
+        self.update_clock(otps, remaining_time)
 
     # update all OTP codes
-    def update_clock(self, OTPs, i):
+    def update_clock(self, otps, i):
         if i > 0:
             # preferred color palette: https://primer.style/css/support/color-system
             if i <= 10:
@@ -90,18 +92,19 @@ class CountdownClock():
 
             self.label.configure(text = round(i))
             i -= 1
-            self.root.after(1000, lambda: self.update_clock(OTPs, i))
+            self.root.after(1000, lambda: self.update_clock(otps, i))
         else:
-            OTPs.update_codes()
-            self.update_clock(OTPs, 30)
+            otps.update_codes()
+            self.update_clock(otps, 30)
 
 class AddButton():
     def __init__(self):
         self.root = root
-        self.Button = tk.Button(self.root, text = "Add", font = (normal_font, 15), command = self.create_dialog)
-        self.Button.grid(row = 2, column = 3)
+        self.button = tk.Button(self.root, text = "Add", font = (NORMAL_FONT, 15), command = self.create_dialog)
+        self.button.grid(row = 2, column = 3)
 
-    def create_dialog(self):
+    @classmethod
+    def create_dialog(cls):
         text = []
         input_boxes = []
 

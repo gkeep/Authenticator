@@ -1,5 +1,4 @@
 import time
-import math
 import json
 
 import pyotp  # https://github.com/pyauth/pyotp
