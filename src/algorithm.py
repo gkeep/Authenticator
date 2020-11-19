@@ -1,5 +1,6 @@
 import time
 import json
+import os
 
 import pyotp  # https://github.com/pyauth/pyotp
 
@@ -10,7 +11,12 @@ import pyotp  # https://github.com/pyauth/pyotp
 
 def get_database():
     """Parse the JSON database for all entries"""
-    with open("data.json", "r") as data:
+    file_path = "data.json"
+    if not os.path.exists(file_path):
+        with open(file_path, 'w') as file:
+            json.dump("", file)
+
+    with open(file_path, "r") as data:
         database = json.load(data)
 
     return database
