@@ -33,6 +33,8 @@ class OTPCode():
     """Labels, that display the OTP code for an account"""
     def __init__(self):
         j = 1
+        global labels
+        labels = []
         for i in range(0, len(DATABASE)):
             self.root = root
             labels.append(
@@ -58,6 +60,8 @@ class AccountInfo():
     def __init__(self):
         i = 0
         j = 0
+        global info
+        info = []
         for account in DATABASE:
             self.root = root
             account_name = account["account_name"]
@@ -122,14 +126,21 @@ class AddButton():
 
         dialog_window.lift() # ensure the window appears above all others
 
+        root.wait_window(dialog_window)
+        update_all() # update all codes after the addition
+
 def update_all():
-    codes = OTPCode()
-    AccountInfo()
-    CountdownClock(codes)
+    global DATABASE
+    DATABASE = algorithm.get_database()
+    if DATABASE: # do not try to display everything if database is empty
+        codes = OTPCode()
+        AccountInfo()
+        CountdownClock(codes)
     AddButton()
 
 def main():
     root.title("Authenticator")
+    root.resizable(width = False, height = False)
     update_all()
 
     root.mainloop()
