@@ -19,7 +19,7 @@ import fonts
     * - [x] Codes don't refresh if remaining time is not 30 on launch
 """
 
-DATABASE = algorithm.parse_json()
+DATABASE = algorithm.get_database()
 
 labels = []
 info = []

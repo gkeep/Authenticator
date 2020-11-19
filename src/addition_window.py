@@ -12,7 +12,7 @@ class Text():
             text.append(
                 tk.Label(root, text = "",
                     font = (NORMAL_FONT, 15),
-                    pady = 10, padx = 10,
+                    pady = 10, padx = 0,
                     justify = "left", anchor = "w"))
             self.label = text[i]
             self.label.grid(row = i, column = 0, sticky = "W")
@@ -48,6 +48,6 @@ class Finish():
             "secret": inputs[2].get()
         }
 
-        algorithm.append_entry(entry)
+        algorithm.database_append(entry)
 
         self.root.destroy() # close the window
