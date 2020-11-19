@@ -59,9 +59,9 @@ def get_otp(secret):
     totp = pyotp.TOTP(secret)
     return totp.now()
 
-def get_remaining_time(secret, period = 30):
+def get_remaining_time(period = 30):
     """Return remaining time of an OTP code"""
-    totp = pyotp.TOTP(secret, interval = float(period))
+    totp = pyotp.TOTP("", interval = float(period))
     time_remaining = (totp.interval - time.time()) % totp.interval
     return time_remaining
 

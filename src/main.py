@@ -76,7 +76,7 @@ class CountdownClock():
         self.label = tk.Label(root, text = "", font = (MONOSPACED_FONT, 20))
         self.label.grid(row = 1, column = 3, padx = 20)
 
-        remaining_time = algorithm.get_remaining_time(DATABASE[1]["secret"])
+        remaining_time = algorithm.get_remaining_time()
         self.update_clock(otps, remaining_time)
 
     # update all OTP codes
