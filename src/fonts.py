@@ -1,9 +1,25 @@
-import pyglet
+import platform
 
 def get_monospaced_font():
-    pyglet.font.add_file('fonts/FiraMono-Regular.ttf') # change the location when compiling
-    return 'Fira Mono'
+    font = ""
+    os = platform.system()
+    if os == "Windows":
+        font = "Lucida Console"
+    elif os == "MacOS":
+        font = "Courier"
+    elif os == "Linux":
+        font = "DejeVu Sans Mono"
+
+    return font
 
 def get_regular_font():
-    pyglet.font.add_file('fonts/FiraSans-Regular.ttf')
-    return 'Fira Sans'
+    font = ""
+    os = platform.system()
+    if os == "Windows":
+        font = "Helvetica"
+    elif os == "MacOS":
+        font = "San Francisco"
+    elif os == "Linux":
+        font = "Sans-Serif"
+
+    return font
