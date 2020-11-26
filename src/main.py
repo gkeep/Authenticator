@@ -4,6 +4,7 @@ import addition_window
 import algorithm
 import fonts
 
+DATABASE = []
 
 labels = []
 info = []
@@ -22,9 +23,9 @@ class OTPCode():
         for i in range(0, len(DATABASE)):
             self.root = root
             labels.append(
-                tk.Label(root, text = "", font = (MONOSPACED_FONT, 30), pady = 5))
+                tk.Label(root, text = "", font = (MONOSPACED_FONT, 30)))
             self.label = labels[i]
-            self.label.grid(row = j, column = 0)
+            self.label.grid(row = j, column = 0, pady = 5)
             j += 2
         self.update_codes()
 
@@ -120,6 +121,9 @@ def update_all():
         codes = OTPCode()
         AccountInfo()
         CountdownClock(codes)
+    else:
+        label_empty = tk.Label(root, text = "Click 'Add' to add new codes!", font = (NORMAL_FONT, 15))
+        label_empty.grid(row = 2, column = 0, pady = 20, padx = 10)
     AddButton()
 
 def main():
