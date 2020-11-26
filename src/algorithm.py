@@ -4,11 +4,6 @@ import os
 
 import pyotp  # https://github.com/pyauth/pyotp
 
-"""
-    TODO list:
-    * - [x] Put all values from uri into a JSON file
-"""
-
 def get_database():
     """Parse the JSON database for all entries"""
     file_path = "data.json"

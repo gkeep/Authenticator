@@ -4,22 +4,6 @@ import addition_window
 import algorithm
 import fonts
 
-"""
-    TODO list:
-    * - [ ] Make a GUI
-    *    - [x] Optimize for multiple codes
-    *    - [ ] Add 'Add' and 'Remove' menus
-    *       - [ ] Add by inputing the values
-    *       - [ ] Add QR code recognition
-    * - [x] Group codes in groups of 2 or 3
-
-    FIXME list:
-    * - [x] Countdown clock and otp code aren't synchronised
-    * - [x] Place account info and code after each other in column
-    * - [x] Codes don't refresh if remaining time is not 30 on launch
-"""
-
-DATABASE = algorithm.get_database()
 
 labels = []
 info = []
