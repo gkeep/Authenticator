@@ -7,8 +7,8 @@ import fonts
 
 DATABASE = []
 
-labels = []
-info = []
+code_list = []
+info_list = []
 
 root = tk.Tk()
 
@@ -16,16 +16,16 @@ MONOSPACED_FONT = fonts.get_monospaced_font()
 NORMAL_FONT = fonts.get_regular_font()
 
 class OTPCode_Label():
-    """Labels, that display the OTP code for an account"""
+    """Labels, display the OTP code for an account"""
     def __init__(self):
         j = 1
-        global labels
-        labels = []
+        global code_list
+        code_list = []
         for i in range(0, len(DATABASE)):
             self.root = root
-            labels.append(
+            code_list.append(
                 tk.Label(root, text = "", font = (MONOSPACED_FONT, 30)))
-            self.label = labels[i]
+            self.label = code_list[i]
             self.label.grid(row = j, column = 0, pady = 5)
             j += 2
         self.update_codes()
@@ -38,27 +38,27 @@ class OTPCode_Label():
             secret = account["secret"]
             code = algorithm.get_otp(secret)
             code = code[ : int(len(code) / 2)] + " " + code[int(len(code) / 2) : len(code)] # group codes by 3
-            labels[i].configure(text = code)
+            code_list[i].configure(text = code)
             i += 1
 
-        if len(labels) > i:
-            for idx in range(i + 1, len(labels)):
-                labels[idx].label.destroy()
+        if len(code_list) > i:
+            for idx in range(i + 1, len(code_list)):
+                code_list[idx].label.destroy()
 
 class AccountInfo_Label():
     """Information about an account above the OTP code"""
     def __init__(self):
         i = 0
         j = 0
-        global info
-        info = []
+        global 
+         = []
         for account in DATABASE:
             self.root = root
             account_name = account["account_name"]
             issuer = account["issuer"]
-            info.append(
+            .append(
                 tk.Label(root, text = (account_name + " at " + issuer), font = (NORMAL_FONT, 12)))
-            self.label = info[i]
+            self.label = [i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
             j += 2
@@ -67,10 +67,10 @@ class AccountInfo_Label():
 
     @staticmethod
     def update_info():
-        print(len(info), " ", len(DATABASE))
-        if len(info) > len(DATABASE):
-            for idx in range(len(DATABASE) + 1, len(info)):
-                info[idx].label.destroy()
+        print(len(), " ", len(DATABASE))
+        if len() > len(DATABASE):
+            for idx in range(len(DATABASE) + 1, len()):
+                [idx].label.destroy()
 
 class CountdownClock_Label():
     """Countdown clock, shows remaining time of an OTP code"""
@@ -153,6 +153,12 @@ class Remove_Button():
 def update_all():
     global DATABASE
     DATABASE = algorithm.get_database()
+
+    if len(DATABASE) < len(): # remove excessive  and code code_list if they were removed
+        for idx in range(0, len()):
+            code_list[idx].destroy()
+            [idx].destroy()
+
     if DATABASE: # do not try to display everything if database is empty
         codes = OTPCode_Label()
         AccountInfo_Label()
@@ -161,6 +167,7 @@ def update_all():
     else:
         label_empty = tk.Label(root, text = "Click 'Add' to add new codes!", font = (NORMAL_FONT, 15))
         label_empty.grid(row = 2, column = 0, pady = 20, padx = 10)
+
     Add_Button()
 
 def main():
