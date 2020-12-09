@@ -50,15 +50,15 @@ class AccountInfo_Label():
     def __init__(self):
         i = 0
         j = 0
-        global 
-         = []
+        global info_list
+        info_list = []
         for account in DATABASE:
             self.root = root
             account_name = account["account_name"]
             issuer = account["issuer"]
-            .append(
+            info_list.append(
                 tk.Label(root, text = (account_name + " at " + issuer), font = (NORMAL_FONT, 12)))
-            self.label = [i]
+            self.label = info_list[i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
             j += 2
@@ -67,10 +67,9 @@ class AccountInfo_Label():
 
     @staticmethod
     def update_info():
-        print(len(), " ", len(DATABASE))
         if len() > len(DATABASE):
-            for idx in range(len(DATABASE) + 1, len()):
-                [idx].label.destroy()
+            for idx in range(len(DATABASE) + 1, len(info_list)):
+                info_list[idx].label.destroy()
 
 class CountdownClock_Label():
     """Countdown clock, shows remaining time of an OTP code"""
@@ -154,10 +153,10 @@ def update_all():
     global DATABASE
     DATABASE = algorithm.get_database()
 
-    if len(DATABASE) < len(): # remove excessive  and code code_list if they were removed
+    if len(DATABASE) < len(): # remove excessive account info and code labels if they were removed
         for idx in range(0, len()):
             code_list[idx].destroy()
-            [idx].destroy()
+            info_list[idx].destroy()
 
     if DATABASE: # do not try to display everything if database is empty
         codes = OTPCode_Label()
