@@ -2,6 +2,7 @@ import tkinter as tk
 
 import addition_window
 import algorithm
+import removal_window
 import fonts
 
 DATABASE = []
@@ -40,7 +41,11 @@ class OTPCode_Label():
             labels[i].configure(text = code)
             i += 1
 
-class AccountInfo():
+        if len(labels) > i:
+            for idx in range(i + 1, len(labels)):
+                labels[idx].label.destroy()
+
+class AccountInfo_Label():
     """Information about an account above the OTP code"""
     def __init__(self):
         i = 0
@@ -57,6 +62,15 @@ class AccountInfo():
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
             j += 2
+
+        # self.update_info()
+
+    @staticmethod
+    def update_info():
+        print(len(info), " ", len(DATABASE))
+        if len(info) > len(DATABASE):
+            for idx in range(len(DATABASE) + 1, len(info)):
+                info[idx].label.destroy()
 
 class CountdownClock_Label():
     """Countdown clock, shows remaining time of an OTP code"""
@@ -97,22 +111,44 @@ class Add_Button():
         text = []
         input_boxes = []
 
-        global dialog_window
-        dialog_window = tk.Toplevel(root)
+        dialog_add = tk.Toplevel(root)
 
-        dialog_window.title("Authenticator - new code")
-        dialog_window.geometry("550x200")
-        dialog_window.resizable(width = False, height = False)
-        frame = tk.Frame(dialog_window, padx = 5, pady = 5)
+        dialog_add.title("Authenticator - new account")
+        dialog_add.geometry("550x200")
+        dialog_add.resizable(width = False, height = False)
+        frame = tk.Frame(dialog_add, padx = 5, pady = 5)
         frame.place(x = 10, y = 0)
-        addition_window.Text(frame, text)
-        addition_window.InputBox(frame, input_boxes)
-        addition_window.Finish(dialog_window, input_boxes)
+        addition_window.Text_Label(frame, text)
+        addition_window.Input_InputBox(frame, input_boxes)
+        addition_window.Finish_Button(dialog_add, input_boxes)
 
-        dialog_window.lift() # ensure the window appears above all others
+        dialog_add.lift() # ensure the window appears above all others
 
-        root.wait_window(dialog_window)
+        root.wait_window(dialog_add)
         update_all() # update all codes after the addition
+
+class Remove_Button():
+    def __init__(self):
+        self.root = root
+        self.button = tk.Button(self.root, text = "Remove", font = (NORMAL_FONT, 15), command = self.create_dialog)
+        self.button.grid(row = 3, column = 3)
+
+    @classmethod
+    def create_dialog(cls):
+        dialog_remove = tk.Toplevel(root)
+
+        dialog_remove.title("Authenticator - remove account")
+        dialog_remove.geometry("550x200")
+        dialog_remove.resizable(width = False, height = False)
+        frame = tk.Frame(dialog_remove, padx = 5, pady = 5)
+        frame.place(x = 10, y = 0)
+        accounts = removal_window.Accounts_ListBox(frame, DATABASE)
+        removal_window.Remove_Button(frame, accounts)
+
+        dialog_remove.lift() # ensure the window appears above all others
+
+        root.wait_window(dialog_remove)
+        update_all() # update all codes after the removal
 
 def update_all():
     global DATABASE

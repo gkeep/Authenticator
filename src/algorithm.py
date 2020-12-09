@@ -26,6 +26,18 @@ def database_append(entry):
     with open("data.json", "w") as database:
         database.write(json.dumps(current_db, indent = 4)) # write the new database
 
+def database_remove(entry):
+    """Remove an entry from the database"""
+    with open("data.json", "r") as init_database:
+        database = json.load(init_database) # read all current entries
+
+    for account in database:
+        if account["account_name"] == entry: # remove the account
+            database.remove(account)
+
+    with open("data.json", "w") as finish_database:
+        finish_database.write(json.dumps(database, indent = 4)) # write the new database
+
 def get_otp(secret):
     """Return OTP from the passed URI"""
     totp = pyotp.TOTP(secret)
