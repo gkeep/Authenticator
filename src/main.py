@@ -14,7 +14,7 @@ root = tk.Tk()
 MONOSPACED_FONT = fonts.get_monospaced_font()
 NORMAL_FONT = fonts.get_regular_font()
 
-class OTPCode():
+class OTPCode_Label():
     """Labels, that display the OTP code for an account"""
     def __init__(self):
         j = 1
@@ -58,7 +58,7 @@ class AccountInfo():
             i += 1
             j += 2
 
-class CountdownClock():
+class CountdownClock_Label():
     """Countdown clock, shows remaining time of an OTP code"""
     def __init__(self, otps):
         self.root = root
@@ -86,7 +86,7 @@ class CountdownClock():
             otps.update_codes()
             self.update_clock(otps, 30)
 
-class AddButton():
+class Add_Button():
     def __init__(self):
         self.root = root
         self.button = tk.Button(self.root, text = "Add", font = (NORMAL_FONT, 15), command = self.create_dialog)
@@ -118,13 +118,14 @@ def update_all():
     global DATABASE
     DATABASE = algorithm.get_database()
     if DATABASE: # do not try to display everything if database is empty
-        codes = OTPCode()
-        AccountInfo()
-        CountdownClock(codes)
+        codes = OTPCode_Label()
+        AccountInfo_Label()
+        CountdownClock_Label(codes)
+        Remove_Button()
     else:
         label_empty = tk.Label(root, text = "Click 'Add' to add new codes!", font = (NORMAL_FONT, 15))
         label_empty.grid(row = 2, column = 0, pady = 20, padx = 10)
-    AddButton()
+    Add_Button()
 
 def main():
     root.title("Authenticator")

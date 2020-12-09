@@ -5,7 +5,7 @@ import fonts
 
 NORMAL_FONT = fonts.get_regular_font()
 
-class Text():
+class Text_Label():
     def __init__(self, root, text):
         self.root = root
         for i in range(0, 3):
@@ -21,7 +21,7 @@ class Text():
         text[1].configure(text = "Account name")
         text[2].configure(text = "Secret Key")
 
-class InputBox():
+class Input_InputBox():
     def __init__(self, root, input_boxes):
         self.root = root
         for i in range(0, 3):
@@ -33,7 +33,7 @@ class InputBox():
 
         input_boxes[2].configure(width = 30)
 
-class Finish():
+class Finish_Button():
     def __init__(self, root, inputs):
         self.root = root
         self.button = tk.Button(root, text = "Save",
