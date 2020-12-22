@@ -15,7 +15,8 @@ class Accounts_ListBox():
     def update(self, DATABASE):
         self.listbox.delete(0, tk.END) # remove all items
         for account in DATABASE:
-            self.listbox.insert(tk.END, account["account_name"])
+            _string = "{} ({})".format(account["account_name"], account["issuer"])
+            self.listbox.insert(tk.END, _string)
 
     def delete(self):
         self.listbox.delete(tk.ACTIVE)

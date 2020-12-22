@@ -57,7 +57,7 @@ class AccountInfo_Label():
             account_name = account["account_name"]
             issuer = account["issuer"]
             info_list.append(
-                tk.Label(root, text = (account_name + " at " + issuer), font = (NORMAL_FONT, 12)))
+                tk.Label(root, text = ("{} at {}".format(account_name, issuer)), font = (NORMAL_FONT, 12)))
             self.label = info_list[i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
