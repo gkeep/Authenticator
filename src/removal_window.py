@@ -30,7 +30,7 @@ class Remove_Button():
         self.button.grid(row = 0, column = 1, padx = 15, pady = 15)
 
     def delete(self, accounts):
-        entry = accounts.listbox.get(tk.ACTIVE)
+        entry = accounts.listbox.get(tk.ACTIVE).split(" ")[0]
 
         accounts.listbox.delete(entry.index(entry))
         algorithm.database_remove(entry)
