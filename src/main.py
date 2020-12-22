@@ -67,7 +67,7 @@ class AccountInfo_Label():
 
     @staticmethod
     def update_info():
-        if len() > len(DATABASE):
+        if len(info_list) > len(DATABASE):
             for idx in range(len(DATABASE) + 1, len(info_list)):
                 info_list[idx].label.destroy()
 
@@ -153,8 +153,8 @@ def update_all():
     global DATABASE
     DATABASE = algorithm.get_database()
 
-    if len(DATABASE) < len(): # remove excessive account info and code labels if they were removed
-        for idx in range(0, len()):
+    if len(DATABASE) < len(info_list): # remove excessive account info and code labels if they were removed
+        for idx in range(0, len(info_list)):
             code_list[idx].destroy()
             info_list[idx].destroy()
 
