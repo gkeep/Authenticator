@@ -63,8 +63,6 @@ class AccountInfo_Label():
             i += 1
             j += 2
 
-        # self.update_info()
-
     @staticmethod
     def update_info():
         if len(info_list) > len(DATABASE):
@@ -113,8 +111,9 @@ class Add_Button():
         dialog_add = tk.Toplevel(root)
 
         dialog_add.title("Authenticator - new account")
-        dialog_add.geometry("550x200")
+        dialog_add.geometry("500x200")
         dialog_add.resizable(width = False, height = False)
+
         frame = tk.Frame(dialog_add, padx = 5, pady = 5)
         frame.place(x = 10, y = 0)
         addition_window.Text_Label(frame, text)
@@ -130,15 +129,16 @@ class Remove_Button():
     def __init__(self):
         self.root = root
         self.button = tk.Button(self.root, text = "Remove", font = (NORMAL_FONT, 15), command = self.create_dialog)
-        self.button.grid(row = 3, column = 3)
+        self.button.grid(row = 3, column = 3, padx = 10)
 
     @classmethod
     def create_dialog(cls):
         dialog_remove = tk.Toplevel(root)
 
         dialog_remove.title("Authenticator - remove account")
-        dialog_remove.geometry("550x200")
+        dialog_remove.geometry("560x225")
         dialog_remove.resizable(width = False, height = False)
+
         frame = tk.Frame(dialog_remove, padx = 5, pady = 5)
         frame.place(x = 10, y = 0)
         accounts = removal_window.Accounts_ListBox(frame, DATABASE)
