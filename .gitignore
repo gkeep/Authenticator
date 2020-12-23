@@ -142,3 +142,6 @@ cython_debug/
 
 # binaries
 bin/
+
+# else
+notes.md
