@@ -105,6 +105,7 @@ class Add_Button():
 
     @classmethod
     def create_dialog(cls):
+        """Create the account addition window"""
         text = []
         input_boxes = []
 
@@ -130,6 +131,7 @@ class Remove_Button():
 
     @classmethod
     def create_dialog(cls):
+        """Create the account removal window"""
         dialog_remove = tk.Toplevel(root)
 
         dialog_remove.title("Authenticator - remove account")
@@ -163,12 +165,9 @@ def update_all():
 
     Add_Button()
 
-def main():
+if __name__ == '__main__':
     root.title("Authenticator")
     root.resizable(width = False, height = False)
     update_all()
 
     root.mainloop()
-
-if __name__ == '__main__':
-    main()

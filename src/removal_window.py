@@ -13,6 +13,7 @@ class Accounts_ListBox():
         self.update(DATABASE)
 
     def update(self, DATABASE):
+        """Write all available accounts to the listbox"""
         self.listbox.delete(0, tk.END) # remove all items
         for account in DATABASE:
             _string = "{} ({})".format(account["account_name"], account["issuer"])
@@ -30,6 +31,7 @@ class Remove_Button():
         self.button.grid(row = 0, column = 1, padx = 15, pady = 15)
 
     def delete(self, accounts):
+        """Get selected entry and delete associated account"""
         entry = accounts.listbox.get(tk.ACTIVE).split(" ")[0]
 
         accounts.listbox.delete(entry.index(entry))
@@ -44,10 +46,8 @@ def update_database():
 
 if __name__ == "__main__":
     root = tk.Tk()
-    # root.geometry("500x250")
 
     update_database()
-
     accs = Accounts_ListBox(root, DATABASE)
     Remove_Button(root, accs)
 

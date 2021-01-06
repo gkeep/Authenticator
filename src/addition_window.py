@@ -12,7 +12,7 @@ class Text_Label():
             text.append(
                 tk.Label(root, text = "",
                     font = (NORMAL_FONT, 15),
-                    pady = 10, padx = 0,
+                    pady = 10, padx = 10,
                     justify = "left", anchor = "w"))
             self.label = text[i]
             self.label.grid(row = i, column = 0, sticky = "W")
@@ -42,6 +42,7 @@ class Finish_Button():
         self.button.place(relx = 0.5, y = 150, anchor = "n")
 
     def finish(self, inputs):
+        """Get inputs from text fields and write them to the database"""
         entry = {
             "issuer": inputs[0].get(),
             "account_name": inputs[1].get(),
@@ -51,3 +52,14 @@ class Finish_Button():
         algorithm.database_append(entry)
 
         self.root.destroy() # close the window
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    text = []
+    inputboxes = []
+
+    Text_Label(root, text)
+    inputs = Input_InputBox(root, inputboxes)
+    Finish_Button(root, inputs)
+
+    root.mainloop()
