@@ -111,13 +111,10 @@ class Add_Button():
         dialog_add = tk.Toplevel(root)
 
         dialog_add.title("Authenticator - new account")
-        dialog_add.geometry("500x200")
         dialog_add.resizable(width = False, height = False)
 
-        frame = tk.Frame(dialog_add, padx = 5, pady = 5)
-        frame.place(x = 10, y = 0)
-        addition_window.Text_Label(frame, text)
-        addition_window.Input_InputBox(frame, input_boxes)
+        addition_window.Text_Label(dialog_add, text)
+        addition_window.Input_InputBox(dialog_add, input_boxes)
         addition_window.Finish_Button(dialog_add, input_boxes)
 
         dialog_add.lift() # ensure the window appears above all others
@@ -136,13 +133,10 @@ class Remove_Button():
         dialog_remove = tk.Toplevel(root)
 
         dialog_remove.title("Authenticator - remove account")
-        dialog_remove.geometry("560x225")
         dialog_remove.resizable(width = False, height = False)
 
-        frame = tk.Frame(dialog_remove, padx = 5, pady = 5)
-        frame.place(x = 10, y = 0)
-        accounts = removal_window.Accounts_ListBox(frame, DATABASE)
-        removal_window.Remove_Button(frame, accounts)
+        accounts = removal_window.Accounts_ListBox(dialog_remove, DATABASE)
+        removal_window.Remove_Button(dialog_remove, accounts)
 
         dialog_remove.lift() # ensure the window appears above all others
 
