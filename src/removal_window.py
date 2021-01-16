@@ -8,8 +8,15 @@ NORMAL_FONT = fonts.get_regular_font()
 class Accounts_ListBox():
     def __init__(self, root, DATABASE):
         self.root = root
-        self.listbox = tk.Listbox(self.root, font = (NORMAL_FONT, 11), width = 50)
-        self.listbox.grid(row = 0, column = 0, padx = 15, pady = 15)
+        self.listbox = tk.Listbox(
+            self.root,
+            font = (NORMAL_FONT, 11),
+            width = 50
+        )
+        self.listbox.grid(
+            row = 0, column = 0,
+            padx = 15, pady = 15
+        )
         self.update(DATABASE)
 
     def update(self, DATABASE):
@@ -25,15 +32,19 @@ class Accounts_ListBox():
 class Remove_Button():
     def __init__(self, root, accounts):
         self.root = root
-        self.button = tk.Button(root, text = "Delete",
+        self.button = tk.Button(
+            root,
+            text = "Delete",
             font = (NORMAL_FONT, 14),
-            command = lambda: self.delete(accounts))
+            command = lambda: self.delete(accounts)
+        )
         self.button.grid(row = 0, column = 1, padx = 15, pady = 15)
 
     def delete(self, accounts):
         """Get selected entry and delete associated account"""
-        entry = accounts.listbox.get(tk.ACTIVE).split(" ")[0]
+        entry = accounts.listbox.get(tk.ACTIVE).split(" ")[0] # get account name from entry
 
+        # delete account from listbox and the database
         accounts.listbox.delete(entry.index(entry))
         algorithm.database_remove(entry)
 

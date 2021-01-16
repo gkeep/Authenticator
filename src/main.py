@@ -21,13 +21,22 @@ class OTPCode_Label():
         j = 1
         global code_list
         code_list = []
+
         for i in range(0, len(DATABASE)):
             self.root = root
             code_list.append(
-                tk.Label(root, text = "", font = (MONOSPACED_FONT, 30)))
+                tk.Label(
+                    root,
+                    text = "",
+                    font = (MONOSPACED_FONT, 30)
+                )
+            )
+
             self.label = code_list[i]
             self.label.grid(row = j, column = 0, pady = 5)
+
             j += 2
+
         self.update_codes()
 
     # update codes
@@ -57,7 +66,12 @@ class AccountInfo_Label():
             account_name = account["account_name"]
             issuer = account["issuer"]
             info_list.append(
-                tk.Label(root, text = ("{} at {}".format(account_name, issuer)), font = (NORMAL_FONT, 12)))
+                tk.Label(
+                    root,
+                    text = ("{} at {}".format(account_name, issuer)),
+                    font = (NORMAL_FONT, 12)
+                )
+            )
             self.label = info_list[i]
             self.label.grid(row = j, column = 0, padx = 10)
             i += 1
@@ -73,7 +87,11 @@ class CountdownClock_Label():
     """Countdown clock, shows remaining time of an OTP code"""
     def __init__(self, otps):
         self.root = root
-        self.label = tk.Label(root, text = "", font = (MONOSPACED_FONT, 20))
+        self.label = tk.Label(
+            root,
+            text = "",
+            font = (MONOSPACED_FONT, 20)
+        )
         self.label.grid(row = 1, column = 3, padx = 20)
 
         remaining_time = algorithm.get_remaining_time()
@@ -100,7 +118,12 @@ class CountdownClock_Label():
 class Add_Button():
     def __init__(self):
         self.root = root
-        self.button = tk.Button(self.root, text = "Add", font = (NORMAL_FONT, 15), command = self.create_dialog)
+        self.button = tk.Button(
+            self.root,
+            text = "Add",
+            font = (NORMAL_FONT, 15),
+            command = self.create_dialog
+        )
         self.button.grid(row = 2, column = 3)
 
     @classmethod
@@ -126,7 +149,12 @@ class Add_Button():
 class Remove_Button():
     def __init__(self):
         self.root = root
-        self.button = tk.Button(self.root, text = "Remove", font = (NORMAL_FONT, 15), command = self.create_dialog)
+        self.button = tk.Button(
+            self.root,
+            text = "Remove",
+            font = (NORMAL_FONT, 15),
+            command = self.create_dialog
+        )
         self.button.grid(row = 3, column = 3, padx = 10)
 
     @classmethod
@@ -160,8 +188,15 @@ def update_all():
         CountdownClock_Label(codes)
         Remove_Button()
     else:
-        label_empty = tk.Label(root, text = "Click 'Add' to add new codes!", font = (NORMAL_FONT, 15))
-        label_empty.grid(row = 2, column = 0, pady = 20, padx = 10)
+        label_empty = tk.Label(
+            root,
+            text = "Click 'Add' to add new codes!",
+            font = (NORMAL_FONT, 15)
+        )
+        label_empty.grid(
+            row = 2, column = 0,
+            pady = 20, padx = 10
+        )
 
     Add_Button()
 

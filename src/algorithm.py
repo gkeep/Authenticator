@@ -9,7 +9,7 @@ def get_database():
     file_path = "data.json"
     if not os.path.exists(file_path):
         with open(file_path, 'w') as file:
-            json.dump("", file)
+            json.dump("", file) # create empty database if it does not exist
 
     with open(file_path, "r") as data:
         database = json.load(data)
