@@ -48,9 +48,14 @@ class Finish_Button():
             root,
             text = "Save",
             font = (NORMAL_FONT, 15),
-        self.button.place(relx = 0.5, y = 150, anchor = "n")
             command = lambda: self.finish(inputs)
         )
+
+        self.button.grid(
+            row = 4, column = 2,
+            padx = 10, pady = 5
+        )
+
 
     def finish(self, inputs):
         """Get inputs from text fields and write them to the database"""
