@@ -1,22 +1,24 @@
 import platform
 
-def get_monospaced_font():
+def get_monospaced_font() -> str:
     font = ""
     os = platform.system()
+
     if os == "Windows":
         font = "Lucida Console"
     elif os == "MacOS":
         font = "Courier"
     elif os == "Linux":
-        font = "DejeVu Sans Mono"
+        font = "Monospace"
 
     return font
 
-def get_regular_font():
+def get_regular_font() -> str:
     font = ""
     os = platform.system()
+
     if os == "Windows":
-        font = "Helvetica"
+        font = "Arial"
     elif os == "MacOS":
         font = "San Francisco"
     elif os == "Linux":
