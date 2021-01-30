@@ -2,9 +2,9 @@ import time
 import json
 import os
 
-import pyotp  # https://github.com/pyauth/pyotp
+import pyotp # https://github.com/pyauth/pyotp
 
-def get_database():
+def get_database() -> list:
     """Parse the JSON database for all entries"""
     file_path = "data.json"
     if not os.path.exists(file_path):
@@ -16,7 +16,7 @@ def get_database():
 
     return database
 
-def database_append(entry):
+def database_append(entry) -> None:
     """Append a new entry to the database"""
     with open("data.json", "r") as database:
         current_db = json.load(database) # read all current entries
@@ -26,7 +26,7 @@ def database_append(entry):
     with open("data.json", "w") as database:
         database.write(json.dumps(current_db, indent = 4)) # write the new database
 
-def database_remove(entry):
+def database_remove(entry) -> None:
     """Remove an entry from the database"""
     with open("data.json", "r") as init_database:
         database = json.load(init_database) # read all current entries
@@ -38,12 +38,12 @@ def database_remove(entry):
     with open("data.json", "w") as finish_database:
         finish_database.write(json.dumps(database, indent = 4)) # write the new database
 
-def get_otp(secret):
+def get_otp(secret) -> str:
     """Return OTP from the passed URI"""
     totp = pyotp.TOTP(secret)
     return totp.now()
 
-def get_remaining_time(period = 30):
+def get_remaining_time(period = 30) -> float:
     """Return remaining time of an OTP code"""
     totp = pyotp.TOTP("", interval = float(period))
     time_remaining = (totp.interval - time.time()) % totp.interval
