@@ -22,6 +22,7 @@ class Accounts_ListBox():
     def update(self, DATABASE):
         """Write all available accounts to the listbox"""
         self.listbox.delete(0, tk.END) # remove all items
+
         for account in DATABASE:
             _string = "{} ({})".format(account["account_name"], account["issuer"])
             self.listbox.insert(tk.END, _string)

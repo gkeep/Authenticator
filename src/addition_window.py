@@ -15,7 +15,9 @@ class Text_Label():
                     text = "",
                     font = (NORMAL_FONT, 15),
                     pady = 10, padx = 10,
-                    justify = "left", anchor = "w"))
+                    justify = "left", anchor = "w"
+                )
+            )
             self.label = text[i]
             self.label.grid(row = i, column = 0, sticky = "W")
 
@@ -32,7 +34,8 @@ class Input_InputBox():
                     root,
                     font = (NORMAL_FONT, 15),
                     width = 20,
-                    justify = "left"))
+                    justify = "left")
+            )
             self.Entry = input_boxes[i]
             self.Entry.grid(row = i, column = 2, columnspan = 2, padx = 10)
 
@@ -45,8 +48,9 @@ class Finish_Button():
             root,
             text = "Save",
             font = (NORMAL_FONT, 15),
-            command = lambda: self.finish(inputs))
         self.button.place(relx = 0.5, y = 150, anchor = "n")
+            command = lambda: self.finish(inputs)
+        )
 
     def finish(self, inputs):
         """Get inputs from text fields and write them to the database"""
