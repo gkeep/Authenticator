@@ -1,5 +1,6 @@
 import platform
 
+
 def get_monospaced_font() -> str:
     font = ""
     os = platform.system()
@@ -12,6 +13,7 @@ def get_monospaced_font() -> str:
         font = "Monospace"
 
     return font
+
 
 def get_regular_font() -> str:
     font = ""
